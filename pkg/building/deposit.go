@@ -38,16 +38,19 @@ func (d *Deposit) Tick(tick int) {
 
 	if d.interval <= d.elapsed {
 		d.amount += int(d.elapsed / d.interval)
-		d.elapsed = d.elapsed - d.interval
-		for ; d.amount > 0; d.amount-- {
-			if !d.output.Accept(d.item) {
-				break
+		d.elapsed = d.elapsed % d.interval
+
+		if d.output != nil {
+			for ; d.amount > 0; d.amount-- {
+				if !d.output.Accept(d.item) {
+					break
+				}
 			}
 		}
 	}
 }
 
-func NewIronOreDeposit() DepositInterface {
+func NewIronOreDeposit() *Deposit {
 	return &Deposit{
 		interval: 1000,
 		item:     entity.ItemIronOre,

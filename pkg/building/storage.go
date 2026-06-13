@@ -49,6 +49,6 @@ func (s *Storage) Tick(tick int) {
 	// not implement
 }
 
-func NewStorage() StorageInterface {
+func NewStorage() *Storage {
 	return &Storage{}
 }
